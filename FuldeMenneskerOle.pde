@@ -3,12 +3,13 @@ import processing.sound.*;
 SoundFile slurpF;
 color bgColor = #f0f0f9;
 ArrayList<DrunkPerson> drunks = new ArrayList<DrunkPerson>();  
-
+ParticleSystem partSys = new ParticleSystem(100,100);
 
 void setup (){
   
   size(800,800);
   drunks.add(new DrunkPerson(50,50,0,0));  
+  drunks.add(new DrunkPerson(200,50,0,0));  
   background(bgColor);
   
   slurpF = new SoundFile(this, "slurp.wav");
@@ -17,20 +18,29 @@ void setup (){
 
 void draw(){
   background(bgColor);
-  update();
-  debug();
-  
+  runAll();
+  partSys.run();
 }
 
 
 void mouseClicked(){
-  allDrink();
+  //allDrink();
   save("save.png");
+  int idx = 0;
+  for(DrunkPerson drunk : drunks){
+    if(drunk.pos[0] < mouseX && mouseX < drunk.pos[0] + drunk.limits[0] &&
+    drunk.pos[1] < mouseY && mouseY < drunk.pos[1] + drunk.limits[1]){
+      drunk.drink();
+    }
+    
+    println(idx, drunk.pos[0] , mouseX , drunk.pos[0] + drunk.limits[0]);
+    idx += 1;
+  }
 } 
 
-void update(){
+void runAll(){
   for(DrunkPerson drunk : drunks){
-    drunk.render();
+    drunk.run();
   }
 }
 void allDrink(){

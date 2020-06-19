@@ -12,23 +12,31 @@ class DrunkPerson {
     this.pos = new int[]{x, y};
     this.vel = new float[]{vx, vy};
   }
+
+  void run() {
+    render();
+    //debug();
+    drinkFinEvent();
+  }
+
   void drink () {
     if (!isDrinking() && drunkness < 4) {
       slurpF.play();
-      print("[DRINKING]");
       tLastDrink = millis();
-      
     }
+    
+   println("[DRINKING]", isDrinking());
+  }
+
+  void drinkFinEvent() {
     if (wasDrinking && !isDrinking()) {
       drunkness += 1;
     }
-
     wasDrinking = isDrinking();
   }
-  
 
   void drawArm() {
-    print("[arm]");
+    //print("[arm]");
     stroke(0);
     pushMatrix();
     translate(90*s+pos[0], 94*s+pos[1]);
@@ -47,7 +55,7 @@ class DrunkPerson {
   }
 
   void drawBody() {
-    print("[body]");
+    //print("[body]");
     line(60*s + pos[0], 75*s + pos[1], 60*s + pos[0], 197*s + pos[1]); //torso      
     circle(60*s + pos[0], 43*s + pos[1], 60*s); //head
     circle(48*s + pos[0], 37*s + pos[1], 1*s); // left eye
