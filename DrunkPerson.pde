@@ -1,6 +1,7 @@
 class DrunkPerson {
 
-  int drunkness = 2; 
+  int id; 
+  int drunkness = 4; 
   int[] pos = {0, 0};
   float s = 1; // universal scalar
   float[] limits = {s*139, s*237}; // = to maximum protrusion in x and y direction
@@ -12,6 +13,8 @@ class DrunkPerson {
   DrunkPerson(int x, int y, int vx, int vy) {
     this.pos = new int[]{x, y};
     this.vel = new float[]{vx, vy};
+    id = idSeed;
+    idSeed += 1;
   }
 
   void run() {
@@ -21,12 +24,9 @@ class DrunkPerson {
   }
 
   void moveAndCollide() {
-
-
-
-
-
-  
+    
+    for(DrunkPerson drunk : drunks){
+    }
     partSys.update(pos[0] +60*s, 59.5*s + pos[1]);
   }
 
@@ -120,7 +120,22 @@ class DrunkPerson {
       partSys.run();
       break;
     default:
-      println("[ERROR]\"reached default case\"");
+      limits[0] = 190*s;
+      limits[1] = 74*s;
+      line(pos[0],pos[1], 43*s + pos[0], 31*s + pos[1]); //upper leg 
+      line(43*s + pos[0], 31*s + pos[1], 155*s + pos[0], 31*s + pos[1]); //torso
+      line(43*s + pos[0], 31*s + pos[1], 0*s + pos[0], 70*s + pos[1]); //lower leg
+      circle(170*s + pos[0], 31*s + pos[1], 35*s); //head
+      line(155*s + pos[0], 31*s + pos[1], 101*s + pos[0], 70*s + pos[1]);
+      line(155*s + pos[0], 31*s + pos[1], 100*s + pos[0], 5*s + pos[1]);
+      line(155*s + pos[0], 31*s + pos[1], 100*s + pos[0], 5*s + pos[1]);
+      line(163*s + pos[0], 26*s + pos[1], 163*s + pos[0], 38*s + pos[1]);
+      circle(175*s + pos[0], 23*s + pos[1], 1*s);      
+      line(173*s + pos[0], 36*s + pos[1], 177*s + pos[0], 40*s + pos[1]);
+      line(177*s + pos[0], 36*s + pos[1], 173*s + pos[0], 40*s + pos[1]);
+      
+      line(177*s + pos[0], 25*s + pos[1], 173*s + pos[0], 21*s + pos[1]);
+      line(173*s + pos[0], 25*s + pos[1], 177*s + pos[0], 21*s + pos[1]);
     }
   }
 

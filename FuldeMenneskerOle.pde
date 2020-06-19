@@ -1,5 +1,5 @@
 import processing.sound.*;
-
+int idSeed = 0;
 SoundFile slurpF;
 color bgColor = #f0f0f9;
 ArrayList<DrunkPerson> drunks = new ArrayList<DrunkPerson>();  
@@ -9,7 +9,7 @@ void setup (){
   
   size(800,800);
   drunks.add(new DrunkPerson(50,50,0,0));  
-  drunks.add(new DrunkPerson(200,50,0,0));  
+  drunks.add(new DrunkPerson(400,50,0,0));  
   background(bgColor);
   
   slurpF = new SoundFile(this, "slurp.wav");
