@@ -8,10 +8,12 @@ class ParticleSystem {
     origo[0] = x;
     origo[1] = y;
   }
-
+  void update (float x, float y) {
+    origo = new float[]{x,y};
+  }
   void newPart () {
-    float vx = random(-8, 8);
-    float vy = random(-8, 8);
+    float vx = random(-2, 2);
+    float vy = random(-2, 2);
     particles.add(new Particle(origo[0], origo[1],vx, vy, pColor));
     println(random(width), random(height) );
   }

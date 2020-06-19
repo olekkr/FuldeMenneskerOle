@@ -1,7 +1,7 @@
 class Particle {
   float[] pos = new float[2];
   float[] vel = new float[2];
-  float g = 1;
+  float g = 0.3;
   color pColor; 
   int lifeTime = 50;
   
@@ -21,8 +21,8 @@ class Particle {
     vel[1] -=vel[1] * 0.03;
   }
   void move() {
-    pos[0] = pos[0] + 1;
-    pos[1] = pos[1] + 1;
+    pos[0] = pos[0] + vel[0];
+    pos[1] = pos[1] + vel[1];
     println("x",pos[0], vel[0], pos[0] + vel[0]);
     println("y",pos[1], vel[1], pos[1] + vel[1], "\n");
   }

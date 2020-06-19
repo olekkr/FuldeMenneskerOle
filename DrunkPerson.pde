@@ -1,12 +1,13 @@
 class DrunkPerson {
 
-  int drunkness = 0; 
+  int drunkness = 2; 
   int[] pos = {0, 0};
   float s = 1; // universal scalar
   float[] limits = {s*139, s*237}; // = to maximum protrusion in x and y direction
   int tLastDrink = -1501;
   float[] vel; // xy vector
   boolean wasDrinking; //flag that specefies if person was drinking last frame
+  ParticleSystem partSys;
 
   DrunkPerson(int x, int y, int vx, int vy) {
     this.pos = new int[]{x, y};
@@ -19,18 +20,30 @@ class DrunkPerson {
     drinkFinEvent();
   }
 
+  void moveAndCollide() {
+
+
+
+
+
+  
+    partSys.update(pos[0] +60*s, 59.5*s + pos[1]);
+  }
+
   void drink () {
     if (!isDrinking() && drunkness < 4) {
       slurpF.play();
       tLastDrink = millis();
     }
-    
-   println("[DRINKING]", isDrinking());
+    println("[DRINKING]", isDrinking());
   }
 
   void drinkFinEvent() {
     if (wasDrinking && !isDrinking()) {
       drunkness += 1;
+      if (drunkness == 3) {
+        partSys = new ParticleSystem(pos[0] +60*s, 59.5*s + pos[1]);
+      }
     }
     wasDrinking = isDrinking();
   }
@@ -96,13 +109,15 @@ class DrunkPerson {
       drawBody();
       stroke(0);
       line(49*s + pos[0], 60*s + pos[1], 70*s + pos[0], 60*s + pos[1]);  // mouth
+
       drawArm();
       break;
 
-    case 3 :
+    case 3 : //throwing up
       drawBody();
       line(49*s + pos[0], 60*s + pos[1], 70*s + pos[0], 60*s + pos[1]);  // mouth 
       drawArm();
+      partSys.run();
       break;
     default:
       println("[ERROR]\"reached default case\"");

@@ -3,7 +3,7 @@ import processing.sound.*;
 SoundFile slurpF;
 color bgColor = #f0f0f9;
 ArrayList<DrunkPerson> drunks = new ArrayList<DrunkPerson>();  
-ParticleSystem partSys = new ParticleSystem(100,100);
+ArrayList<ParticleSystem> partSystems = new ArrayList<ParticleSystem>();  
 
 void setup (){
   
@@ -19,7 +19,7 @@ void setup (){
 void draw(){
   background(bgColor);
   runAll();
-  partSys.run();
+  
 }
 
 
@@ -42,6 +42,7 @@ void runAll(){
   for(DrunkPerson drunk : drunks){
     drunk.run();
   }
+  
 }
 void allDrink(){
   for(DrunkPerson drunk : drunks){
