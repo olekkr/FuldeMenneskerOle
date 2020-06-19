@@ -3,7 +3,7 @@ class Particle {
   float[] vel = new float[2];
   float g = 0.3;
   color pColor; 
-  int lifeTime = 50;
+  int lifeTime = 100;
   
   Particle(float x, float y, float vx, float vy, color pColor){
     pos = new float[] {x,y};
@@ -11,7 +11,7 @@ class Particle {
     this.pColor = pColor;
   }
   void render(){
-    fill(pColor, lifeTime*5);
+    fill(pColor, lifeTime*2.5);
     noStroke();
     circle(pos[0], pos[1], 10);
   }
@@ -23,8 +23,7 @@ class Particle {
   void move() {
     pos[0] = pos[0] + vel[0];
     pos[1] = pos[1] + vel[1];
-    println("x",pos[0], vel[0], pos[0] + vel[0]);
-    println("y",pos[1], vel[1], pos[1] + vel[1], "\n");
+    
   }
   void reduceLife(){
     lifeTime -= 1;

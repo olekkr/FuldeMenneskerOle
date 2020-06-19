@@ -15,7 +15,7 @@ class ParticleSystem {
     float vx = random(-2, 2);
     float vy = random(-2, 2);
     particles.add(new Particle(origo[0], origo[1],vx, vy, pColor));
-    println(random(width), random(height) );
+    
   }
   void trimParts () {
     for (int i = 0; i<particles.size(); i++) {

@@ -1,41 +1,60 @@
 class DrunkPerson {
 
   int id; 
-  int drunkness = 4; 
-  int[] pos = {0, 0};
+  int drunkness = 0; 
+  float[] pos = {0, 0};
   float s = 1; // universal scalar
-  float[] limits = {s*139, s*237}; // = to maximum protrusion in x and y direction
+  float[] limits = {s*132, s*237}; // = to maximum protrusion in x and y direction
   int tLastDrink = -1501;
   float[] vel; // xy vector
   boolean wasDrinking; //flag that specefies if person was drinking last frame
   ParticleSystem partSys;
 
-  DrunkPerson(int x, int y, int vx, int vy) {
-    this.pos = new int[]{x, y};
+  DrunkPerson(float x, float y, float vx, float vy) {
+    this.pos = new float[]{x, y};
     this.vel = new float[]{vx, vy};
     id = idSeed;
     idSeed += 1;
+  }
+
+  boolean within(float x, float y) {
+    return (pos[0] < x && x < pos[0] + limits[0] &&
+      pos[1] < y && y < pos[1] + limits[1]);
   }
 
   void run() {
     render();
     //debug();
     drinkFinEvent();
+    moveAndCollide();
   }
 
   void moveAndCollide() {
-    
-    for(DrunkPerson drunk : drunks){
+    if (pos[0] + limits[0] > width) {
+      vel[0] *= -1;
     }
-    partSys.update(pos[0] +60*s, 59.5*s + pos[1]);
+    if (pos[0] < 0) {
+      vel[0] *= -1;
+    }
+    if (pos[1] + limits[1] > width) {
+      vel[1] *= -1;
+    }
+    if (pos[1] < 1) {
+      vel[1] *= -1;
+    }
+    
+    this.pos[0] += vel[0];
+    this.pos[1] += vel[1];
+    if (drunkness == 3){
+      partSys.update(pos[0] +60*s, 59.5*s + pos[1]);
+    }
   }
-
   void drink () {
     if (!isDrinking() && drunkness < 4) {
       slurpF.play();
       tLastDrink = millis();
     }
-    println("[DRINKING]", isDrinking());
+    
   }
 
   void drinkFinEvent() {
@@ -119,10 +138,13 @@ class DrunkPerson {
       drawArm();
       partSys.run();
       break;
+
     default:
       limits[0] = 190*s;
       limits[1] = 74*s;
-      line(pos[0],pos[1], 43*s + pos[0], 31*s + pos[1]); //upper leg 
+      vel = new float[]{0,0};
+
+      line(pos[0], pos[1], 43*s + pos[0], 31*s + pos[1]); //upper leg 
       line(43*s + pos[0], 31*s + pos[1], 155*s + pos[0], 31*s + pos[1]); //torso
       line(43*s + pos[0], 31*s + pos[1], 0*s + pos[0], 70*s + pos[1]); //lower leg
       circle(170*s + pos[0], 31*s + pos[1], 35*s); //head
@@ -133,9 +155,10 @@ class DrunkPerson {
       circle(175*s + pos[0], 23*s + pos[1], 1*s);      
       line(173*s + pos[0], 36*s + pos[1], 177*s + pos[0], 40*s + pos[1]);
       line(177*s + pos[0], 36*s + pos[1], 173*s + pos[0], 40*s + pos[1]);
-      
+
       line(177*s + pos[0], 25*s + pos[1], 173*s + pos[0], 21*s + pos[1]);
       line(173*s + pos[0], 25*s + pos[1], 177*s + pos[0], 21*s + pos[1]);
+      
     }
   }
 
